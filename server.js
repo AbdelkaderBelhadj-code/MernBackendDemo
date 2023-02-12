@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3500;
 const { logger } = require("./Middleware/logger");
 const errorHandler = require("./Middleware/errorHandler");
 const cookieParser = require("cookie-parser");
-//const cores = require('cores')
+const cors = require('cors')
 const corsOptions = require("./config/corsOptions");
 const connectDB = require("./config/dbConn");
 const mongoose = require("mongoose");
@@ -20,16 +20,15 @@ app.use(express.json());
 
 app.use(logger);
 
-//app.use(cores())
+app.use(cors())
 
-//app.use(corsOptions())
+app.use(cors(corsOptions))
 
 app.use(cookieParser()); //third-party middleware
 
 app.use("/", express.static(path.join(__dirname, "/public")));
 
 app.use("/", require("./routes/root"));
-
 app.use("/users",require("./routes/userRoutes"))
 app.use("/notes",require("./routes/noteRoutes"))
 
